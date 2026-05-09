@@ -1,0 +1,21 @@
+{
+  "name": "esim",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "tsc": "tsc",
+    "multiply": "tsc && node multiplier.ts",
+    "start": "tsc && node index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.2",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
