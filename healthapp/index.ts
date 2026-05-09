@@ -21,7 +21,7 @@ app.get("/bmi", (req, res) => {
         weight: validatedData.weight,
         height: validatedData.height,
         bmi: bmi
-    }); //Unsafe argument of type `any` assigned to a parameter of type `number`
+    });
 });
 
 app.post("/exercises", (req, res) => {

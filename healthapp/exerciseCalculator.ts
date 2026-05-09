@@ -15,20 +15,25 @@ interface Data {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const validateArguments2 = (hours: any, target: any): Data | null => {
+    if (!Array.isArray(hours)) {
+        return null;
+    }
+
+    const targetNum = Number(target);
+    if (isNaN(targetNum)) {
+        return null;
+    }
+
     for (const hour of hours) {
         if (isNaN(Number(hour))) {
             return null;
         }
     }
 
-    if (isNaN(target)) {
-        return null;
-    }
-
     const hours_nums: number[] = hours.map((hour: number) => Number(hour));
 
     return { 
-        target: Number(target),
+        target: targetNum,
         hours: hours_nums
     };
 };
