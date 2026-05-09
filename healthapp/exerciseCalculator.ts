@@ -13,6 +13,27 @@ interface Data {
     hours: number[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const validateArguments2 = (hours: any, target: any): Data | null => {
+    for (const hour of hours) {
+        if (isNaN(Number(hour))) {
+            return null;
+        }
+    }
+
+    if (isNaN(target)) {
+        return null;
+    }
+
+    const hours_nums: number[] = hours.map((hour: number) => Number(hour));
+
+    return { 
+        target: Number(target),
+        hours: hours_nums
+    };
+};
+
+
 const parseArguments2 = (args: string[]): Data => {
     if (args.length < 4) throw new Error('Not enough arguments');
 
@@ -32,11 +53,11 @@ const parseArguments2 = (args: string[]): Data => {
     return { 
         target: Number(args[2]),
         hours: hours_nums
-    }
-}
+    };
+};
 
 
-const calculateExercises = (hours: number[], target: number): ExerciseData => {
+export const calculateExercises = (hours: number[], target: number): ExerciseData => {
     const periodLength = hours.length;
     const trainingDays = hours.filter(hour => hour > 0).length;
     const average = periodLength > 0 ? hours.reduce((a, b) => a + b, 0) / periodLength : 0;
@@ -52,15 +73,18 @@ const calculateExercises = (hours: number[], target: number): ExerciseData => {
         ratingDescription = "Not too bad but could be better :)";
     }
     return {periodLength, trainingDays, average, success, rating, ratingDescription, target};
-}
+};
 
-try {
-    const { hours, target } = parseArguments2(process.argv);
-    console.log(calculateExercises(hours, target));
-} catch (error: unknown) {
-    let errorMessage = 'Something bad happened.'
-    if (error instanceof Error) {
-        errorMessage += ' Error: ' + error.message;
+
+if (process.argv[1] === import.meta.filename) {
+    try {
+        const { hours, target } = parseArguments2(process.argv);
+        console.log(calculateExercises(hours, target));
+    } catch (error: unknown) {
+        let errorMessage = 'Something bad happened.';
+        if (error instanceof Error) {
+            errorMessage += ' Error: ' + error.message;
+        }
+        console.log(errorMessage);
     }
-    console.log(errorMessage);
 }
